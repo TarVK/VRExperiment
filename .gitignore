@@ -58,6 +58,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-#User stuff
+# User stuff
 /UserSettings/
 
+# Experiment stuff
+/assets/data
