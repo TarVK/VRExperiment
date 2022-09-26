@@ -39,7 +39,7 @@ public class HeadLogger : MonoBehaviour
 
     void AddToLog(string fileName, string text)
     {
-        string path = Application.dataPath + @"\data\"+fileName+".txt";
+        string path = Application.persistentDataPath + @"/"+fileName+".txt";
         System.Text.UnicodeEncoding encode = new System.Text.UnicodeEncoding();
         byte[] byteData = encode.GetBytes(text);
         Debug.Log(text);
