@@ -53,14 +53,14 @@ public class InitScene : MonoBehaviour
 
                     // Move tile to correct position on wall
                     if (downwardsWalls) {
-                        tile.transform.Translate((col + 0.5f - NrTilesWidth / 2) * TileSize, 
+                        tile.transform.Translate((col - NrTilesWidth / 2) * TileSize, 
                                                 (row + 0.5f - NrTilesHeight / 2) * TileSize, 
-                                                (NrTilesWidth / 2) * TileSize);
+                                                (NrTilesWidth / 2 + 0.5f) * TileSize);
                     }
                     else {
-                        tile.transform.Translate((col + 0.5f - NrTilesWidth / 2) * TileSize, 
+                        tile.transform.Translate((col - NrTilesWidth / 2) * TileSize, 
                                                 (row + 0.5f) * TileSize, 
-                                                (NrTilesWidth / 2) * TileSize);
+                                                (NrTilesWidth / 2 + 0.5f) * TileSize);
                     }
                                         
                     // Scale tile
@@ -104,6 +104,7 @@ public class InitScene : MonoBehaviour
         int target_wall = Random.Range(0, 4);
         int target_row = Random.Range(0, NrTilesHeight);
         int target_col = Random.Range(0, NrTilesWidth);
+        Debug.Log("Wall " + target_wall + "row " + target_row + "col " + target_col);
 
         for (int wall_id = 0; wall_id < 4; wall_id++)
         {
