@@ -9,14 +9,14 @@ public class InitSceneV2 : MonoBehaviour
     public int NrTilesWidth;
     public float TileSize;
 
-    // public GameObject pointer;
-    // public GameObject pointingHighlighter;
-    // public Vector3 pointerDir = new Vector3(0, 1f, -1);
-    // public GameObject headset;
+    public GameObject pointer;
+    public GameObject pointingHighlighter;
+    public Vector3 pointerDir = new Vector3(0, 1f, -1);
+    public GameObject headset;
 
     public bool downwardsWalls;
 
-    // private HeadLogger logger;
+    private HeadLogger logger;
     private GameObject[] walls;
     private GameObject target;
     private Object[] textures;
@@ -28,9 +28,9 @@ public class InitSceneV2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // logger = headset.GetComponent<HeadLogger>();
-        // logger.randomSeedData = Random.Range(0, (int)1e8);
-        // Random.InitState(logger.randomSeedData);
+        logger = headset.GetComponent<HeadLogger>();
+        logger.randomSeedData = Random.Range(0, (int)1e8);
+        Random.InitState(logger.randomSeedData);
 
         textures = Resources.LoadAll(@"TestImages", typeof(Texture2D));
         if (textures.Length == 0) { 
@@ -132,7 +132,7 @@ public class InitSceneV2 : MonoBehaviour
         if (this.searching == searching) return;
 
         this.searching = searching;
-        // logger.setActive(searching);
+        logger.setActive(searching);
         if (searching)
         {
             initializeSymbols();
@@ -145,36 +145,36 @@ public class InitSceneV2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // // Manage pointing
-        // RaycastHit hit;
-        // Transform pointerTransform = pointer.transform;
-        // if (Physics.Raycast(pointerTransform.position, pointerTransform.TransformDirection(pointerDir.normalized), out hit, 200))
-        // {
-        //     if (Input.GetButtonDown("XRI_Right_TriggerButton"))
-        //     {
-        //         if (hit.transform.gameObject.tag == "target")
-        //         {
-        //             Debug.Log("Target found!");
-        //             setSearching(false);
-        //         }
-        //         else
-        //         {
-        //             Debug.Log("Invalid target");
-        //         }
-        //     }
+        // Manage pointing
+        RaycastHit hit;
+        Transform pointerTransform = pointer.transform;
+        if (Physics.Raycast(pointerTransform.position, pointerTransform.TransformDirection(pointerDir.normalized), out hit, 200))
+        {
+            if (Input.GetButtonDown("XRI_Right_TriggerButton"))
+            {
+                if (hit.transform.gameObject.tag == "target")
+                {
+                    Debug.Log("Target found!");
+                    setSearching(false);
+                }
+                else
+                {
+                    Debug.Log("Invalid target");
+                }
+            }
 
 
-        //     pointingHighlighter.transform.position = hit.point;
-        //     pointingHighlighter.SetActive(true);
-        // } else
-        // {
-        //     pointingHighlighter.SetActive(false);
-        // }
+            pointingHighlighter.transform.position = hit.point;
+            pointingHighlighter.SetActive(true);
+        } else
+        {
+            pointingHighlighter.SetActive(false);
+        }
 
 
 
-        // // Check for buttons
-        // if (Input.GetButtonDown("XRI_Right_PrimaryButton"))
-        //     setSearching(true);
+        // Check for buttons
+        if (Input.GetButtonDown("XRI_Right_PrimaryButton"))
+            setSearching(true);
     }
 }

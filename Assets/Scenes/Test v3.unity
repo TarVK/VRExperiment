@@ -389,9 +389,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f55a92ce1933c84f80fed5680187273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NrTilesHeight: 40
+  NrTilesHeight: 30
   NrTilesWidth: 20
   TileSize: 1
+  pointer: {fileID: 1214534706}
+  pointingHighlighter: {fileID: 1757920614}
+  pointerDir: {x: 0, y: 1, z: -1}
+  headset: {fileID: 1497229768}
   downwardsWalls: 1
 --- !u!1001 &591452475
 PrefabInstance:
