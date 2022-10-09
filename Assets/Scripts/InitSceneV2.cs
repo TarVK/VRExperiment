@@ -226,5 +226,9 @@ public class InitSceneV2 : MonoBehaviour
             setEasy(true);
         if (Input.GetButtonDown("XRI_Left_SecondaryButton"))
             setEasy(false);
+
+
+        if (Input.GetButtonDown("XRI_Left_Grip"))
+            setSearching(false);
     }
 }
