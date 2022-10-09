@@ -5,8 +5,16 @@ using Unity.VisualScripting;
 
 public class InitSceneV2 : MonoBehaviour
 {
-    public int NrTilesHeight;
-    public int NrTilesWidth;
+    public int NrTilesHeightHard;
+    public int NrTilesWidthHard;
+
+    public int NrTilesHeightEasy;
+    public int NrTilesWidthEasy;
+
+    private bool isEasy = true;
+    private int NrTilesHeight;
+    private int NrTilesWidth;
+
     public float TileSize;
 
     public GameObject pointer;
@@ -29,18 +37,19 @@ public class InitSceneV2 : MonoBehaviour
     void Start()
     {
         logger = headset.GetComponent<HeadLogger>();
-        logger.randomSeedData = Random.Range(0, (int)1e8);
-        Random.InitState(logger.randomSeedData);
 
         textures = Resources.LoadAll(@"TestImages", typeof(Texture2D));
-        if (textures.Length == 0) { 
-            Debug.LogWarning("No tile textures found. Abort scene initialization"); 
-            return; 
+        if (textures.Length == 0)
+        {
+            Debug.LogWarning("No tile textures found. Abort scene initialization");
+            return;
         }
-        if (textures.Length == 1) { 
-            Debug.LogWarning("At least two images needes, one image found. Abort scene initialization"); 
-            return; 
+        if (textures.Length == 1)
+        {
+            Debug.LogWarning("At least two images needes, one image found. Abort scene initialization");
+            return;
         }
+
 
         // define materials
         targetMaterial = new Material(Shader.Find("Diffuse"));
@@ -48,23 +57,43 @@ public class InitSceneV2 : MonoBehaviour
 
         wallMaterial = new Material(Shader.Find("Diffuse"));
         wallMaterial.mainTexture = textures[1] as Texture2D;
+
+
+        setEasy(true);
+        // TEMP (I can't start the game without controller)
+        // setSearching(true);
+    }
+
+    void initializeWalls()
+    {
+        if(this.walls!=null)
+            foreach (GameObject wall in this.walls)
+                Destroy(wall);
+        if (this.target) Destroy(this.target);
+
+        logger.randomSeedData = Random.Range(0, (int)1e8);
+        Random.InitState(logger.randomSeedData);
+
         wallMaterial.mainTextureScale = new Vector2(NrTilesWidth, NrTilesHeight);
 
         // create walls
         walls = new GameObject[4];
-        for (int w = 0; w < 4; w++) {
+        for (int w = 0; w < 4; w++)
+        {
             // Place wall relative to script object
             GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Plane);
             wall.transform.parent = gameObject.transform;
-            wall.transform.localPosition = new Vector3(0,0,0);
+            wall.transform.localPosition = new Vector3(0, 0, 0);
 
-            if (downwardsWalls) {
+            if (downwardsWalls)
+            {
                 wall.transform.Translate(0, 0, (NrTilesWidth / 2) * TileSize);
             }
-            else {
+            else
+            {
                 wall.transform.Translate(0, (NrTilesHeight / 2) * TileSize, (NrTilesWidth / 2) * TileSize);
             }
-            
+
             wall.transform.localScale = new Vector3(TileSize * NrTilesWidth * 0.1f, 1f, TileSize * NrTilesHeight * 0.1f);
             wall.transform.localRotation = Quaternion.Euler(90, 0, 180);
             wall.transform.RotateAround(gameObject.transform.position, Vector3.up, 90 * w);
@@ -72,9 +101,6 @@ public class InitSceneV2 : MonoBehaviour
             wall.tag = "not target";
             walls[w] = wall;
         }
-
-        // TEMP (I can't start the game without controller)
-        setSearching(true);
     }
 
     void initializeSymbols()
@@ -114,6 +140,25 @@ public class InitSceneV2 : MonoBehaviour
 
         target.GetComponent<Renderer>().material = targetMaterial;
         target.tag = "target";
+    }
+
+    void setEasy(bool easy)
+    {
+        if (this.searching) return;
+
+        this.isEasy = easy;
+        this.logger.isEasy = easy;
+        if(easy)
+        {
+            this.NrTilesWidth = NrTilesWidthEasy;
+            this.NrTilesHeight = NrTilesHeightEasy;
+        } else
+        {
+            this.NrTilesWidth = NrTilesWidthHard;
+            this.NrTilesHeight = NrTilesHeightHard;
+        }
+        this.initializeWalls();
+        Debug.Log("Set difficulty to " + (easy ? "easy" : "hard"));
     }
 
     void hideSymbols()
@@ -174,7 +219,12 @@ public class InitSceneV2 : MonoBehaviour
 
 
         // Check for buttons
-        if (Input.GetButtonDown("XRI_Right_PrimaryButton"))
+        if (Input.GetButtonDown("XRI_Left_TriggerButton"))
             setSearching(true);
+
+        if (Input.GetButtonDown("XRI_Left_PrimaryButton"))
+            setEasy(true);
+        if (Input.GetButtonDown("XRI_Left_SecondaryButton"))
+            setEasy(false);
     }
 }

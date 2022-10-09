@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -389,12 +389,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f55a92ce1933c84f80fed5680187273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NrTilesHeight: 30
-  NrTilesWidth: 20
+  NrTilesHeightHard: 28
+  NrTilesWidthHard: 28
+  NrTilesHeightEasy: 18
+  NrTilesWidthEasy: 18
   TileSize: 1
-  pointer: {fileID: 1214534706}
+  pointer: {fileID: 1497229768}
   pointingHighlighter: {fileID: 1757920614}
-  pointerDir: {x: 0, y: 1, z: -1}
+  pointerDir: {x: 0, y: 0, z: 1}
   headset: {fileID: 1497229768}
   downwardsWalls: 1
 --- !u!1001 &591452475
@@ -978,12 +980,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cd9187a4412ce49b7118a0fdeab3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showTracker: 1
   fovAngleYaw: 28
   fovAnglePitch: 20
   timesPerSec: 5
-  showTracker: 0
-  trackerMaterial: {fileID: 2100000, guid: debba26356ec36c4e926634eae5afe56, type: 2}
+  trackerSize: 0.2
+  trackerMaterial: {fileID: 2100000, guid: 19f2cce1c0ba3af40be70d0e1420560a, type: 2}
   randomSeedData: 0
+  isEasy: 0
 --- !u!1001 &1533798751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1054,7 +1058,7 @@ PrefabInstance:
     - target: {fileID: 8758423527188247893, guid: 5b158b94c373d4b4f9e98cdb92789343,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b158b94c373d4b4f9e98cdb92789343, type: 3}
@@ -1100,7 +1104,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1757920616
 MeshRenderer:
